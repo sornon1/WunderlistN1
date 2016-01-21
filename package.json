@@ -1,0 +1,19 @@
+{
+  "name": "Todoist",
+  "main": "./lib/main",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "nylas": ">=0.3.43-b95f1f7"
+  },
+  "description": "Enter a description of your package!",
+  "dependencies": {
+    "localStorage": "^1.0.3",
+    "reflux": "^0.3.0",
+    "superagent": "^1.6.1"
+  },
+  "license": "MIT"
+}
