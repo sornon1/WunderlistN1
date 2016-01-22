@@ -125,7 +125,7 @@ class MyMessageSidebar extends React.Component
     if code
         request
           .post("https://todoist.com/oauth/access_token")
-          .send({ client_id: options.client_id, client_secret: options.client_secret, code: code, redirect_uri: "http://www.iamsupratim.com/n1todoist" })
+          .send({ client_id: options.client_id, client_secret: options.client_secret, code: code, redirect_uri: "yourredirecturlhere" })
           .set('Content-Type','application/x-www-form-urlencoded')
           .end(@handleAccessTokenResponse)
 
