@@ -3,6 +3,12 @@ Todoist Plugin for N1- add email as tasks
 
 ![](assets/Todoist Banner.png)
 
+Screens
+
+![](assets/screen1.png)
+![](assets/screen2.png)
+
+
 # Installing
 
 1. [Download](https://nylas.com/n1) Nylas N1 email client if you have not yet
