@@ -12,6 +12,7 @@ class MyMessageSidebar extends React.Component
   options = {
            client_id: "",
            client_secret: "",
+           redirect_uri: "yourredirecturlhere",  
            scopes: ["data:read_write"]
   }
 
@@ -125,7 +126,7 @@ class MyMessageSidebar extends React.Component
     if code
         request
           .post("https://todoist.com/oauth/access_token")
-          .send({ client_id: options.client_id, client_secret: options.client_secret, code: code, redirect_uri: "yourredirecturlhere" })
+          .send({ client_id: options.client_id, client_secret: options.client_secret, code: code, redirect_uri: options.redirect_uri })
           .set('Content-Type','application/x-www-form-urlencoded')
           .end(@handleAccessTokenResponse)
 
