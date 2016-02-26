@@ -62,7 +62,7 @@ class MyMessageSidebar extends React.Component
   _renderAddToTodoist: =>
 
     <div className="todoist-sidebar">
-      <input className="textBox" type="text" value={@state.thread.subject}/>
+      <input className="textBox" type="text" id="taskName" placeholder={@state.thread.subject}/>
       <div className="buttonFullWidth" onClick={@_addToTodoistPost}><p>Add to Todoist</p></div>
       <div style={display: "inline-block"}>
         <div className="transparentButton" onClick={@_logoutTodoist}><p>Logout from Todoist</p></div>
@@ -79,7 +79,7 @@ class MyMessageSidebar extends React.Component
      accessToken = localStorage.getItem("todoist_token")
      uuidVal = @guidCreate()
      temp_idVal = @guidCreate()
-     taskName = @state.thread.subject
+     taskName = document.getElementById('taskName').value + @state.thread.subject
      command = [{ type: "item_add", uuid: uuidVal, temp_id: temp_idVal, args: { content: taskName}}]
      payload = { token: accessToken, commands: JSON.stringify(command) }
 
