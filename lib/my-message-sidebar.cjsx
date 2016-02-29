@@ -45,9 +45,9 @@ class MyMessageSidebar extends React.Component
     @unsubscribe()
 
   render: =>
-    accessToken = localStorage.getItem("todoist_token")
+    accessToken = localStorage.getItem("wunderlist_token")
     if accessToken and accessToken != ""
-      content = @_renderAddToTodoist()
+      content = @_renderAddToWunderlist()
     else
       content = @_renderContent()
     <div className="my-message-sidebar">
@@ -55,18 +55,18 @@ class MyMessageSidebar extends React.Component
     </div>
 
   _renderContent: =>
-    <div className="todoist-sidebar" style={display: "inline-block"}>
+    <div className="wunderlist-sidebar" style={display: "inline-block"}>
         <p className="headingText">Add your email as tasks </p>
-        <div className="button" onClick={@_loginToTodoist}><p>Login to Todoist</p></div>
+        <div className="button" onClick={@_loginToWunderlist}><p>Login to Wunderlist</p></div>
     </div>
 
-  _renderAddToTodoist: =>
+  _renderAddToWunderlist: =>
 
-    <div className="todoist-sidebar">
+    <div className="wunderlist-sidebar">
       <input className="textBox" type="text" id="taskName" placeholder={@state.thread.subject}/>
-      <div className="buttonFullWidth" onClick={@_addToTodoistPost}><p>Add to Todoist</p></div>
+      <div className="buttonFullWidth" onClick={@_addToWunderlistPost}><p>Add to Wunderlist</p></div>
       <div style={display: "inline-block"}>
-        <div className="transparentButton" onClick={@_logoutTodoist}><p>Logout from Todoist</p></div>
+        <div className="transparentButton" onClick={@_logoutWunderlist}><p>Logout from Wunderlist</p></div>
       </div>
     </div>
 
@@ -76,8 +76,8 @@ class MyMessageSidebar extends React.Component
   guidCreate: () ->
      "#{@s4()}#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}#{@s4()}#{@s4()}"
 
-  _addToTodoistPost: =>
-     accessToken = localStorage.getItem("todoist_token")
+  _addToWunderlistPost: =>
+     accessToken = localStorage.getItem("wunderlist_token")
      uuidVal = @guidCreate()
      temp_idVal = @guidCreate()
      taskName = document.getElementById('taskName').value + @state.thread.subject
@@ -86,14 +86,14 @@ class MyMessageSidebar extends React.Component
 
      if accessToken
        request
-       .post("https://todoist.com/API/v6/sync")
+       .post("https://wunderlist.com/API/v6/sync")
        .send(payload)
        .set("Content-Type","application/x-www-form-urlencoded")
-       .end(@handleAddToTodoistResponse)
+       .end(@handleAddToWunderlistResponse)
 
 
-  _logoutTodoist: =>
-    localStorage.removeItem("todoist_token")
+  _logoutWunderlist: =>
+    localStorage.removeItem("wunderlist_token")
     @forceUIUpdate()
 
 
@@ -102,13 +102,13 @@ class MyMessageSidebar extends React.Component
 
   handleAccessTokenResponse : (err, response) =>
     if response and response.ok
-        localStorage.setItem('todoist_token', response.body.access_token)
+        localStorage.setItem('wunderlist_token', response.body.access_token)
     else
         console.log err
     authWindow.destroy()
     @forceUIUpdate()
 
-  handleAddToTodoistResponse : (err,response) =>
+  handleAddToWunderlistResponse : (err,response) =>
     if response
        console.log response
     else
@@ -125,15 +125,15 @@ class MyMessageSidebar extends React.Component
 
     if code
         request
-          .post("https://todoist.com/oauth/access_token")
+          .post("https://wunderlist.com/oauth/access_token")
           .send({ client_id: options.client_id, client_secret: options.client_secret, code: code, redirect_uri: options.redirect_uri })
           .set('Content-Type','application/x-www-form-urlencoded')
           .end(@handleAccessTokenResponse)
 
 
-  _loginToTodoist: =>
-     todoistUrl = 'https://todoist.com/oauth/authorize?'
-     mainUrl = todoistUrl + 'client_id=' + options.client_id + '&scope=' + options.scopes
+  _loginToWunderlist: =>
+     wunderlistUrl = 'https://wunderlist.com/oauth/authorize?'
+     mainUrl = wunderlistUrl + 'client_id=' + options.client_id + '&scope=' + options.scopes
      console.log mainUrl
      authWindow = new BrowserWindow({ width: 800, height: 600, show: false, 'node-integration': false })
      authWindow.loadUrl(mainUrl)
