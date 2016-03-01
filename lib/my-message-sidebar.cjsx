@@ -64,22 +64,23 @@ class MyMessageSidebar extends React.Component
 
     <div className="wunderlist-sidebar">
       <input className="textBox" type="text" id="taskName" placeholder={@state.thread.subject}/>
-      <input className="textBox" type="radio" name=
       <div className="buttonFullWidth" onClick={@_addToWunderlistPost}><p>Add to Wunderlist</p></div>
         <div className="transparentButton" onClick={@_logoutWunderlist}><p>Logout from Wunderlist</p></div>
-      </div>
     </div>
 
-  s4: ->
-     Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
-
   guidCreate: () ->
-     "#{@s4()}#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}#{@s4()}#{@s4()}"
+    text = ''
+    possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    i = 0
+    while i < 5
+      text += possible.charAt(Math.floor(Math.random() * possible.length))
+      i++
+    text
 
   _addToWunderlistPost: =>
      accessToken = localStorage.getItem("wunderlist_token")
      taskName = document.getElementById('taskName').value + @state.thread.subject
-     payload = { "title": taskName , "list_id":  }
+     payload = { "title": taskName , "list_id": "12355" }
 
      if accessToken
        request
@@ -119,10 +120,10 @@ class MyMessageSidebar extends React.Component
 
   storeWunderlistLists : (err,response) =>
     if response and response.ok
-        localStorage.setItem('wunderlist_lists', JSON.stringify(response.body)
-        console.log(response.body)
+      localStorage.setItem('wunderlist_lists', JSON.stringify(response.body))
+      console.log response.body
     else
-        console.log err
+      console.log err
     authWindow.destroy()
 
   handleAddToWunderlistResponse : (err,response) =>
