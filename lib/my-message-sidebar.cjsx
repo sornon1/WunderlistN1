@@ -78,19 +78,17 @@ class MyMessageSidebar extends React.Component
 
   _addToWunderlistPost: =>
      accessToken = localStorage.getItem("wunderlist_token")
-     uuidVal = @guidCreate()
-     temp_idVal = @guidCreate()
      taskName = document.getElementById('taskName').value + @state.thread.subject
-     command = [{ type: "item_add", uuid: uuidVal, temp_id: temp_idVal, args: { content: taskName}}]
-     payload = { token: accessToken, commands: JSON.stringify(command) }
+     payload = { "title": taskName , "list_id":  }
 
      if accessToken
        request
-       .post("https://wunderlist.com/API/v6/sync")
+       .post("https://a.wunderlist.com/api/v1/tasks")
        .send(payload)
-       .set("Content-Type","application/x-www-form-urlencoded")
+       .set("Content-Type","application/json")
+       .set("X-Access-Token",accessToken)
+       .set("X-Client-ID",options.client_id)
        .end(@handleAddToWunderlistResponse)
-
 
   _logoutWunderlist: =>
     localStorage.removeItem("wunderlist_token")
@@ -115,7 +113,6 @@ class MyMessageSidebar extends React.Component
        console.log err
     authWindow.destroy()
 
-
   handleCallback : (event,oldUrl,newUrl) =>
     raw_code = /code=([^&]*)/.exec(newUrl)
     if raw_code and raw_code.length > 1
@@ -125,15 +122,15 @@ class MyMessageSidebar extends React.Component
 
     if code
         request
-          .post("https://wunderlist.com/oauth/access_token")
-          .send({ client_id: options.client_id, client_secret: options.client_secret, code: code, redirect_uri: options.redirect_uri })
+          .post("https://www.wunderlist.com/oauth/access_token")
+          .send({ client_id: options.client_id, client_secret: options.client_secret, code: code })
           .set('Content-Type','application/x-www-form-urlencoded')
           .end(@handleAccessTokenResponse)
 
-
   _loginToWunderlist: =>
-     wunderlistUrl = 'https://wunderlist.com/oauth/authorize?'
-     mainUrl = wunderlistUrl + 'client_id=' + options.client_id + '&scope=' + options.scopes
+     wunderlistUrl = 'https://www.wunderlist.com/oauth/authorize?'
+     state = @guidCreate()
+     mainUrl = wunderlistUrl + 'client_id=' + options.client_id + '&redirect_uri=' + options.redirect_uri + '&state=' + state
      console.log mainUrl
      authWindow = new BrowserWindow({ width: 800, height: 600, show: false, 'node-integration': false })
      authWindow.loadUrl(mainUrl)
