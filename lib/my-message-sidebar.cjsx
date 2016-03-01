@@ -80,7 +80,9 @@ class MyMessageSidebar extends React.Component
   _addToWunderlistPost: =>
      accessToken = localStorage.getItem("wunderlist_token")
      taskName = document.getElementById('taskName').value + @state.thread.subject
-     payload = { "title": taskName , "list_id": "12355" }
+     lists = JSON.parse(localStorage.getItem("wunderlist_lists"))
+     list_id = lists[0].id
+     payload = { "title": taskName , "list_id": list_id }
 
      if accessToken
        request
