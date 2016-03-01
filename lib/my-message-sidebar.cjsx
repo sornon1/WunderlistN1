@@ -64,8 +64,8 @@ class MyMessageSidebar extends React.Component
 
     <div className="wunderlist-sidebar">
       <input className="textBox" type="text" id="taskName" placeholder={@state.thread.subject}/>
+      <input className="textBox" type="radio" name=
       <div className="buttonFullWidth" onClick={@_addToWunderlistPost}><p>Add to Wunderlist</p></div>
-      <div style={display: "inline-block"}>
         <div className="transparentButton" onClick={@_logoutWunderlist}><p>Logout from Wunderlist</p></div>
       </div>
     </div>
@@ -101,10 +101,29 @@ class MyMessageSidebar extends React.Component
   handleAccessTokenResponse : (err, response) =>
     if response and response.ok
         localStorage.setItem('wunderlist_token', response.body.access_token)
+        @fetchWunderlistLists()
     else
         console.log err
     authWindow.destroy()
     @forceUIUpdate()
+
+  fetchWunderlistLists : (err,response) =>
+     accessToken = localStorage.getItem("wunderlist_token")
+     
+     if accessToken
+       request
+       .get("https://a.wunderlist.com/api/v1/lists")
+       .set("X-Access-Token",accessToken)
+       .set("X-Client-ID",options.client_id)
+       .end(@storeWunderlistLists)
+
+  storeWunderlistLists : (err,response) =>
+    if response and response.ok
+        localStorage.setItem('wunderlist_lists', JSON.stringify(response.body)
+        console.log(response.body)
+    else
+        console.log err
+    authWindow.destroy()
 
   handleAddToWunderlistResponse : (err,response) =>
     if response
