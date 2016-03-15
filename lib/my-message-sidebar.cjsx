@@ -63,7 +63,7 @@ class MyMessageSidebar extends React.Component
 
     <div className="wunderlist-sidebar">
       <input className="textBox" type="text" id="taskName" placeholder={@state.thread.subject}/>
-      <div className="buttonFullWidth" onClick={@_addToWunderlistPost}><p>Add to Wunderlist</p></div>
+      <div className="button" onClick={@_addToWunderlistPost}><p>Add to Wunderlist</p></div>
         <div className="transparentButton" onClick={@_logoutWunderlist}><p>Logout from Wunderlist</p></div>
     </div>
 
