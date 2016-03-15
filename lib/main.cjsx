@@ -1,13 +1,13 @@
 {ComponentRegistry} = require 'nylas-exports'
 
-MyMessageSidebar = require './my-message-sidebar'
+WunderlistSidebar = require './wunderlist-sidebar'
 
 module.exports =
   # Activate is called when the package is loaded. If your package previously
   # saved state using `serialize` it is provided.
   #
   activate: (@state) ->
-    ComponentRegistry.register MyMessageSidebar,
+    ComponentRegistry.register WunderlistSidebar,
       role: 'MessageListSidebar:ContactCard'
 
   # Serialize is called when your package is about to be unmounted.
@@ -22,4 +22,4 @@ module.exports =
   # subscribing to events, release them here.
   #
   deactivate: ->
-    ComponentRegistry.unregister(MyMessageSidebar)
+    ComponentRegistry.unregister(WunderlistSidebar)

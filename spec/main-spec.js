@@ -1,34 +1,28 @@
 (function() {
-  var ComponentRegistry, MyComposerButton, MyMessageSidebar, activate, deactivate, _ref;
+    var ComponentRegistry, MyComposerButton, WunderlistSidebar, activate, deactivate, _ref;
 
-  ComponentRegistry = require('nylas-exports').ComponentRegistry;
+    ComponentRegistry = require('nylas-exports').ComponentRegistry;
 
-  _ref = require('../lib/main'), activate = _ref.activate, deactivate = _ref.deactivate;
+    _ref = require('../lib/main'), activate = _ref.activate, deactivate = _ref.deactivate;
 
-  MyMessageSidebar = require('../lib/my-message-sidebar');
+    WunderlistSidebar = require('../lib/wunderlist-sidebar');
 
-  MyComposerButton = require('../lib/my-composer-button');
-
-  describe("activate", function() {
-    return it("should register the composer button and sidebar", function() {
-      spyOn(ComponentRegistry, 'register');
-      activate();
-      expect(ComponentRegistry.register).toHaveBeenCalledWith(MyComposerButton, {
-        role: 'Composer:ActionButton'
-      });
-      return expect(ComponentRegistry.register).toHaveBeenCalledWith(MyMessageSidebar, {
-        role: 'MessageListSidebar:ContactCard'
-      });
+    describe("activate", function() {
+        return it("should register the sidebar", function() {
+            spyOn(ComponentRegistry, 'register');
+            activate();
+            return expect(ComponentRegistry.register).toHaveBeenCalledWith(WunderlistSidebar, {
+                role: 'MessageListSidebar:ContactCard'
+            });
+        });
     });
-  });
 
-  describe("deactivate", function() {
-    return it("should unregister the composer button and sidebar", function() {
-      spyOn(ComponentRegistry, 'unregister');
-      deactivate();
-      expect(ComponentRegistry.unregister).toHaveBeenCalledWith(MyComposerButton);
-      return expect(ComponentRegistry.unregister).toHaveBeenCalledWith(MyMessageSidebar);
+    describe("deactivate", function() {
+        return it("should unregister the sidebar", function() {
+            spyOn(ComponentRegistry, 'unregister');
+            deactivate();
+            return expect(ComponentRegistry.unregister).toHaveBeenCalledWith(WunderlistSidebar);
+        });
     });
-  });
 
 }).call(this);

@@ -1,7 +1,7 @@
 {ComponentRegistry} = require 'nylas-exports'
 {activate, deactivate} = require '../lib/main'
 
-MyMessageSidebar = require '../lib/my-message-sidebar'
+WunderlistSidebar = require '../lib/wunderlist-sidebar'
 MyComposerButton = require '../lib/my-composer-button'
 
 describe "activate", ->
@@ -9,11 +9,11 @@ describe "activate", ->
     spyOn(ComponentRegistry, 'register')
     activate()
     expect(ComponentRegistry.register).toHaveBeenCalledWith(MyComposerButton, {role: 'Composer:ActionButton'})
-    expect(ComponentRegistry.register).toHaveBeenCalledWith(MyMessageSidebar, {role: 'MessageListSidebar:ContactCard'})
+    expect(ComponentRegistry.register).toHaveBeenCalledWith(WunderlistSidebar, {role: 'MessageListSidebar:ContactCard'})
 
 describe "deactivate", ->
   it "should unregister the composer button and sidebar", ->
     spyOn(ComponentRegistry, 'unregister')
     deactivate()
     expect(ComponentRegistry.unregister).toHaveBeenCalledWith(MyComposerButton)
-    expect(ComponentRegistry.unregister).toHaveBeenCalledWith(MyMessageSidebar)
+    expect(ComponentRegistry.unregister).toHaveBeenCalledWith(WunderlistSidebar)

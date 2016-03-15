@@ -6,8 +6,8 @@ request  = require('superagent')
 
 authWindow = new BrowserWindow({ width: 800, height: 600, show: false, 'node-integration': false })
 
-class MyMessageSidebar extends React.Component
-  @displayName: 'MyMessageSidebar'
+class WunderlistSidebar extends React.Component
+  @displayName: 'WunderlistSidebar'
 
   options = {
            client_id: "",
@@ -48,12 +48,12 @@ class MyMessageSidebar extends React.Component
     if accessToken and accessToken != ""
       content = @_renderAddToWunderlist()
     else
-      content = @_renderContent()
+      content = @_renderLoginToWunderlist()
     <div className="my-message-sidebar">
       {content}
     </div>
 
-  _renderContent: =>
+  _renderLoginToWunderlist: =>
     <div className="wunderlist-sidebar" style={display: "inline-block"}>
         <p className="headingText">Add your email as tasks </p>
         <div className="button" onClick={@_loginToWunderlist}><p>Login to Wunderlist</p></div>
