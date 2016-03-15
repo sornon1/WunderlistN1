@@ -166,4 +166,4 @@ class WunderlistSidebar extends React.Component
      thread: FocusedContentStore.focused('thread')
 
 
-module.exports = MyMessageSidebar
+module.exports = WunderlistSidebar
