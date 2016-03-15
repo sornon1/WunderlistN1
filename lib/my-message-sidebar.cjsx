@@ -13,7 +13,6 @@ class MyMessageSidebar extends React.Component
            client_id: "",
            client_secret: "",
            redirect_uri: "yourredirecturlhere",  
-           scopes: ["data:read_write"]
   }
 
   # Providing container styles tells the app how to constrain
@@ -79,7 +78,7 @@ class MyMessageSidebar extends React.Component
 
   _addToWunderlistPost: =>
      accessToken = localStorage.getItem("wunderlist_token")
-     taskName = document.getElementById('taskName').value + @state.thread.subject
+     taskName = document.getElementById('taskName').value + " [" + @state.thread.subject + "]"
      lists = JSON.parse(localStorage.getItem("wunderlist_lists"))
      list_id = lists[0].id
      payload = { "title": taskName , "list_id": list_id }
